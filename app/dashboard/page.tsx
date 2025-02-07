@@ -6,7 +6,7 @@ import { account, databases, id } from '@/lib/appwrite';
 import { Box, Button, VStack, Heading, Text, Avatar, useToast } from '@chakra-ui/react';
 import { FaPlay, FaPause, FaClock, FaStop } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import Timer from '../components/Timer'
+import WorkSessionTracker from '../components/WorkSessionTracker'
 
 const COLLECTION_ID = '67a64d5c001d8a73f81a'; // Reemplázalo con el ID real de tu colección
 const DATABASE_ID = '67a648b90019e3091654'; // Reemplázalo con el ID real de tu base de datos
@@ -106,7 +106,7 @@ export default function WorkSession() {
           {session?.status === 'active' && <Button leftIcon={<FaPause />} colorScheme='yellow' size='lg' onClick={() => updateSession({ break_start_time: new Date().toISOString(), status: 'on_break' })}>Iniciar Break</Button>}
           {session?.status === 'on_break' && <Button leftIcon={<FaClock />} colorScheme='blue' size='lg' onClick={() => updateSession({ resume_time: new Date().toISOString(), status: 'active' })}>Finalizar Break</Button>}
           {session && <Button leftIcon={<FaStop />} colorScheme='red' size='lg' onClick={() => updateSession({ end_time: new Date().toISOString(), status: 'finished' })}>Finalizar Jornada</Button>}
-          <Timer></Timer>
+          <WorkSessionTracker></WorkSessionTracker>
           <Button colorScheme='red' onClick={handleLogout}>Logout</Button>
         </VStack>
       </motion.div>
