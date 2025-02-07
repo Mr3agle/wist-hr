@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import {Flex, Box} from '@chakra-ui/react'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +29,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
         <Providers>
           {children}
         </Providers>
+        <Flex padding="30px" justify="space-between" align="center" bg="red.200">
+          <Box  maxW="500px" background="gray.600">
+          <p>Wolf Instruments © 2025. Todos los derechos reservados.</p>
+          </Box>
+          <p>logo</p>
+          <p>Hecho con 💙 por WIST Dev Team</p>
+        </Flex>
       </body>
     </html>
   );

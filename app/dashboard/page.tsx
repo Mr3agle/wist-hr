@@ -6,9 +6,10 @@ import { account, databases, id } from '@/lib/appwrite';
 import { Box, Button, VStack, Heading, Text, Avatar, useToast } from '@chakra-ui/react';
 import { FaPlay, FaPause, FaClock, FaStop } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import Timer from '../components/Timer'
 
-const COLLECTION_ID = '67a288b8002c70d31e6c'; // Reemplázalo con el ID real de tu colección
-const DATABASE_ID = '67a2383a0017362f6beb'; // Reemplázalo con el ID real de tu base de datos
+const COLLECTION_ID = '67a64d5c001d8a73f81a'; // Reemplázalo con el ID real de tu colección
+const DATABASE_ID = '67a648b90019e3091654'; // Reemplázalo con el ID real de tu base de datos
 
 export default function WorkSession() {
   const router = useRouter();
@@ -60,7 +61,7 @@ export default function WorkSession() {
   const createSession = async () => {
     setLoading(true);
     try {
-      const newSession = await databases.createDocument(DATABASE_ID, COLLECTION_ID,id.unique(), {
+      const newSession = await databases.createDocument(DATABASE_ID, COLLECTION_ID, id.unique(), {
         user_id: user.id,
         start_time: new Date().toISOString(),
         status: 'active',
@@ -103,8 +104,9 @@ export default function WorkSession() {
           <Text color='gray.600'>{session ? `Estado: ${session.status}` : 'Sin jornada activa'}</Text>
           {!session && <Button leftIcon={<FaPlay />} colorScheme='green' size='lg' onClick={createSession} isLoading={loading}>Iniciar Jornada</Button>}
           {session?.status === 'active' && <Button leftIcon={<FaPause />} colorScheme='yellow' size='lg' onClick={() => updateSession({ break_start_time: new Date().toISOString(), status: 'on_break' })}>Iniciar Break</Button>}
-          {session?.status === 'on_break' && <Button leftIcon={<FaClock />} colorScheme='blue' size='lg' onClick={() => updateSession({ resume_time: new Date().toISOString(), status: 'active' })}>Resumir Labores</Button>}
+          {session?.status === 'on_break' && <Button leftIcon={<FaClock />} colorScheme='blue' size='lg' onClick={() => updateSession({ resume_time: new Date().toISOString(), status: 'active' })}>Finalizar Break</Button>}
           {session && <Button leftIcon={<FaStop />} colorScheme='red' size='lg' onClick={() => updateSession({ end_time: new Date().toISOString(), status: 'finished' })}>Finalizar Jornada</Button>}
+          <Timer></Timer>
           <Button colorScheme='red' onClick={handleLogout}>Logout</Button>
         </VStack>
       </motion.div>

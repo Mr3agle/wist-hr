@@ -1,10 +1,10 @@
 import { Client, Account, Databases, ID } from 'appwrite';
 
-export const client = new Client();
+const client = new Client();
 
 client
-    .setEndpoint('http://localhost/v1')
-    .setProject('67a23284001d926f3ce3'); // Replace with your project ID
+    .setEndpoint('https://portal.wist-ec.com/v1')
+    .setProject('67a61236002c7ca82866');
 
 export const id = ID
 export const databases = new Databases(client)
