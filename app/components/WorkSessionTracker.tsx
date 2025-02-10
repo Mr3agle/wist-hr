@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Icon, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, VStack, Text, Textarea, useToast } from "@chakra-ui/react";
 import { FaPlay, FaPause, FaStop, FaCoffee } from "react-icons/fa";
 import { databases } from "@/lib/appwrite"; // Import Appwrite client
+import { unique } from "next/dist/build/utils";
 
 const WorkSessionTracker = ({ USER_ID }) => {
   const [isWorking, setIsWorking] = useState(false); // Track if the user is working
@@ -91,18 +92,19 @@ const WorkSessionTracker = ({ USER_ID }) => {
 
   // Start the work session
   const startWork = async () => {
-    setIsWorking(true);
-    setWorkTimer(setInterval(() => setWorkTime((prev) => prev + 1), 1000));
 
     // Get the user's location
     getLocation();
+
+    setIsWorking(true);
+    setWorkTimer(setInterval(() => setWorkTime((prev) => prev + 1), 1000));
 
     // Create a new Work_sessions document in Appwrite
     try {
       const response = await databases.createDocument(
         process.env._TIMETRACK_DATABASE_ID, // Use environment variable
         process.env._TIMETRACK_COLLECTION_ID, // Use environment variable
-        "unique()", // Auto-generate document ID
+        id.unique(), // Auto-generate document ID
         {
           userId: USER_ID, // Use the USER_ID prop
           startTime: new Date().toISOString(),
